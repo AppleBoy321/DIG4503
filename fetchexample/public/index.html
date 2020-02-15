@@ -1,0 +1,31 @@
+<html>
+    <body>
+        <script>
+            function clicker(event) {
+
+                event.preventDefault();
+
+                let element = document.querySelector("input");
+
+                fetch("/api/" + element.value).then((res) => {
+                    return res.json();
+                }).then((processed) => {
+                    
+                    let reporting = document.querySelector("#reportingArea");
+
+                    if(processed.error) {
+                        reporting.innerHTML = processed.error;
+                    } else {
+                        reporting.innerHTML = "Secret!";
+                    }
+
+                });
+            }
+        </script>
+        <form onsubmit="clicker(event)">
+            <input id="pokemonId" type="text">
+            <button>Submit</button>
+        </form>
+        <div id="reportingArea"></div>
+    </body>
+</html>
