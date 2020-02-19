@@ -1,31 +1,100 @@
 <html>
     <body>
         <script>
-            function clicker(event) {
+            function readScore(event) {
 
+                // Stop (prevent) the 'default' form action
                 event.preventDefault();
 
-                let element = document.querySelector("input");
+                // Find the element with 'id="score"'
+                let element = document.querySelector("#score");
 
-                fetch("/api/" + element.value).then((res) => {
+                fetch("/api/movies/score/" + element.value)
+                .then((res) => {
+                    // Parse the string into a JavaScript object and return it
                     return res.json();
-                }).then((processed) => {
+                })
+                .then((processed) => {
                     
+                    // Find the element with 'id="reportingArea"'
                     let reporting = document.querySelector("#reportingArea");
 
+                    // Does the 'processed' object have a property called 'error'?
                     if(processed.error) {
                         reporting.innerHTML = processed.error;
                     } else {
-                        reporting.innerHTML = "Secret!";
+                        reporting.innerHTML = processed.name;
                     }
 
                 });
             }
+            function readName(event) {
+
+                // Stop (prevent) the 'default' form action
+                event.preventDefault();
+
+                 // Find the element with 'id="name"'
+                let element = document.querySelector("#name");
+
+                fetch("/api/movies/name/" + element.value)
+                .then((res) => {
+                    // Parse the string into a JavaScript object and return it
+                    return res.json();
+                })
+                .then((processed) => {
+                    
+                    // Find the element with 'id="reportingArea"'
+                    let reporting = document.querySelector("#reportingArea");
+
+                    // Does the 'processed' object have a property called 'error'?
+                    if(processed.error) {
+                        reporting.innerHTML = processed.error;
+                    } else {
+                        reporting.innerHTML = processed.name;
+                    }
+
+                });
+            }
+            function createMovie(event) {
+                // Stop (prevent) the 'default' form action
+                event.preventDefault();
+
+                 // Find the element with 'id="movieName"'
+                let name = document.querySelector("#movieName");
+                 // Find the element with 'id="movieScore"'
+                let score = document.querySelector("#movieScore");
+
+                fetch("/api/movies/" + name.value + "/" + score.value, {
+                    // Set the 'method' to POST
+                    "method": "post"
+                }).then((res) => {
+                    // Parse the string into a JavaScript object and return it
+                    return res.json();
+                }).then((processed) => {
+                    console.log(processed);
+                });
+
+
+            }
         </script>
-        <form onsubmit="clicker(event)">
-            <input id="pokemonId" type="text">
+        <h2>Score</h2>
+        <form onsubmit="readScore(event)">
+            <input id="score" type="text">
             <button>Submit</button>
         </form>
+        <h2>Name</h2>
+        <form onsubmit="readName(event)">
+            <input id="name" type="text">
+            <button>Submit</button>
+        </form>
+        <hr>
+        <form onsubmit="createMovie(event)">
+            <input id="movieName" type="text">
+            <input id="movieScore" type="text">
+            <button>Submit</button>
+        </form>
+        <hr>
+        <h2>Reporting</h2>
         <div id="reportingArea"></div>
     </body>
 </html>
