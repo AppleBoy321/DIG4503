@@ -1,46 +1,58 @@
-const Express= require("express");
-const App= Express();
-const pokemon= require("json-pokemon");
-const chalk= require("chalk");
-const port= 80;
+const Express = require("express");
+const chalk = require("chalk");
+const pokemon = require("json-pokemon");
+const App = Express();
+const port = 80;
+const cors = require("cors");
 
-App.use("/", Express.static("public"));
+App.use(cors());
 
-App.get("/api/id/:id", (req, res)=>{
-    let result={"Wrong": "No Answer!"};
+App.use("/", Express.static("client/build"));
 
-    pokemon.forEach((value)=>{
-        if(req.params.id == value.id){
-            result= value.name;
+App.get("/api/id/:id", (req, res) => {
+
+    let result = {"error": "Sorry, wrong answer."};
+
+    pokemon.forEach((value) => {
+        if(req.params.id == value.id) {
+            result = value;
         }
     });
 
-    if(result.error=="No Answer!"){
+    if(result.error == "Sorry, wrong answer.") {
+        
         console.log(chalk.red(req.path));
-    }else{
-        console.log(chalk.green(req.path));
-    }
-    res.json(result);
-});
-
-App.get("/api/name/:name", (req, res)=>{
-    let result={"Wrong": "No Answer!"};
-
-    pokemon.forEach((value)=>{
-        if(req.params.name == value.name){
-            result= value.name;
-        }
-    });
-
-    if(result.error=="No Answer!"){
-        console.log(chalk.red(req.path));
-    }else{
+    } else {
+       
         console.log(chalk.green(req.path));
     }
 
     res.json(result);
+
 });
 
-App.listen(port, ()=>{
-    console.log("server is running");
+App.get("/api/name/:name", (req, res) => {
+
+    let result = {"error": "Sorry, wrong answer."};
+
+    pokemon.forEach((value) => {
+        if(req.params.name == value.name) {
+            result = value;
+        }
+    });
+
+    if(result.error == "Sorry, wrong answer.") {
+        
+        console.log(chalk.red(req.path));
+    } else {
+        
+        console.log(chalk.green(req.path));
+    }
+
+    res.json(result);
+
+});
+
+App.listen(port, () => {
+    console.log("Server running!");
 });
