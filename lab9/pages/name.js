@@ -1,24 +1,40 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import NameSearch from '../components/NameSearch';
-const Name= ()=>{
-    return(
-        <div>
-            <Head>
-                <title>NameSearch</title>
-            </Head>
-            <Link href="/id">
-                <a>Search by ID</a>
+import styles from '../components/Style/styles.module.css';
+
+const Name = () => {
+  return (
+    <div className={styles.body}>
+
+      <Head>
+        <title>Pokemon Database Lab9</title>
+      </Head>
+
+      <div>
+
+        <h1 className={styles.head}><img className={styles.img} src="https://www.pinclipart.com/picdir/big/366-3668322_pokmon-pokball-pokeball-png-clipart.png" alt="Pokemon Ball"/>Pokémon Database</h1>
+        
+        <ul className={styles.nav}>
+          <li><a className={styles.li} href="/name">Search by Name</a></li>
+          <li><a className={styles.li} href="/type">Search by Type</a></li>
+          <li><a className={styles.li} href="/id">Search by ID</a></li>
+        </ul>
+        
+        <div className={styles.search}>
+          <p>
+            <Link href="/index">
+              <a className={styles.a}>Back to the Start</a>
             </Link>
-            <br/>
-            <Link href="/type">
-                <a>Search by type</a>
-            </Link>
-            <br/>
-            <NameSearch/>
-            <div id="reportingArea">
-            </div>
+          </p>
+
+          <p>Type a Name of a Pokémon to search for it.</p>
+          <NameSearch/>
+          <div className={styles.result} id="reportingArea"></div>
         </div>
-    )
+      </div>
+    </div>
+  );
 }
+
 export default Name;

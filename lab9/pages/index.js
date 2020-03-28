@@ -1,21 +1,32 @@
 import Head from 'next/head';
 import Link from 'next/link';
-const Home = () => (
-  <div className="container">
-    <Head>
-      <title>Home page</title>
-    </Head>
-    <Link href="/name">
-      <a>Search by name</a>
-    </Link>
-    <br/>
-    <Link href="/id">
-      <a>Search by ID</a>
-    </Link>
-    <br/>
-    <Link href="/type">
-      <a>Search by type</a>
-    </Link>
-  </div>
-)
-export default Home
+import styles from '../components/Style/styles.module.css';
+
+const HomePage = () => {
+  return (
+      <div className={styles.body}>
+
+        <Head>
+          <title>Pokemon Database Lab9</title>
+        </Head>
+
+        <div>
+          
+          <h1 className={styles.head}><img className={styles.img} src="https://www.pinclipart.com/picdir/big/366-3668322_pokmon-pokball-pokeball-png-clipart.png" alt="Pokemon Ball"/>Pokémon Database</h1>
+          
+          <div className={styles.search}>
+            <p className={styles.subHead}>Choose one to search or Pokémon</p>
+          </div>
+
+          <ul className={styles.nav}>
+            <li><a className={styles.li} href="/name">Search by Name</a></li>
+            <li><a className={styles.li} href="/type">Search by Type</a></li>
+            <li><a className={styles.li} href="/id">Search by ID</a></li>
+          </ul>
+
+        </div>
+      </div>
+    );
+  }
+
+export default HomePage;
